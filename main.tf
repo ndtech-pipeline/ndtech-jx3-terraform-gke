@@ -34,3 +34,15 @@ output "docs" {
   description = "Follow Jenkins X 3.x alpha docs for more information"
   value       = "https://jenkins-x.io/docs/v3/"
 }
+
+
+# store tfstate in s3 and locking information in DynamoDB
+terraform {
+  backend "s3" {
+    encrypt = true
+    bucket = "prod-ndtech-tfstate"
+    region = "us-west-2"
+    dynamodb_table = "prod-ndtech-tfstate-lock"
+    key = "prod/gke/ndtech-k8s-jenkinsx3-gk3/terraform.tfstate"
+  }
+}
